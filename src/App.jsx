@@ -1,11 +1,16 @@
 // dopo aver svuotato i CSS che arrivano con Vite, includo
 // bootstrap.min.css in App.jsx
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.min.css'
-import CustomNavbar from './components/CustomNavbar'
-import Home from './components/Home'
-import ReservationForm from './components/ReservationForm'
-import Backoffice from './components/Backoffice'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-icons/font/bootstrap-icons.min.css"
+import CustomNavbar from "./components/CustomNavbar"
+import Home from "./components/Home"
+import ReservationForm from "./components/ReservationForm"
+import Backoffice from "./components/Backoffice"
+import Footer from "./components/Footer"
+import Menu from "./components/Menu"
+import Details from "./components/Details"
+import NotFound from "./components/NotFound"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 // per utilizzare Bootstrap in react la cosa migliore è installare 2 pacchetti:
 // - bootstrap
@@ -19,18 +24,25 @@ import Backoffice from './components/Backoffice'
 
 function App() {
   return (
-    <main>
-      {/* ho dichiarato la CustomNavbar in un componente separato, ora lo importo
+    <BrowserRouter>
+      <main className="d-flex flex-column min-vh-100">
+        {/* ho dichiarato la CustomNavbar in un componente separato, ora lo importo
       e lo uso qui! */}
-      {/* <CustomNavbar tema="light" /> */}
-      <CustomNavbar tema="dark" />
-      {/* qui metterò il componente del "backoffice" */}
-      <Backoffice />
-      {/* qui metterò il componente del FORM */}
-      <ReservationForm />
-      {/* qui ci metterò Home */}
-      <Home />
-    </main>
+        {/* <CustomNavbar tema="light" /> */}
+        <CustomNavbar tema="dark" />
+        <div className="flex-grow-1">
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<ReservationForm />} path="/prenota" />
+            <Route element={<Backoffice />} path="/admin" />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/details/:pastaId" element={<Details />} />
+            <Route element={<NotFound />} path="*" />
+          </Routes>
+        </div>
+        <Footer />
+      </main>
+    </BrowserRouter>
   )
 }
 

@@ -5,11 +5,16 @@
 // ...però qui dobbiamo semplicemente fare una navbar statica!
 // ...quindi la faccio con un componente a funzione!
 
-import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Container, Nav, Navbar } from "react-bootstrap"
+import { Link, useLocation } from "react-router-dom"
 // gli import dei componenti vanno inclusi nel file dove vengono adoperati!
 
 const CustomNavbar = function (props) {
   // dentro props c'è la proprietà "tema"
+
+  const location = useLocation()
+  console.log("location", location)
+
   return (
     <Navbar
       collapseOnSelect
@@ -18,13 +23,38 @@ const CustomNavbar = function (props) {
       data-bs-theme={props.tema} // "light" o "dark"
     >
       <Container fluid={true}>
-        <Navbar.Brand href="#home">Epistaurant</Navbar.Brand>
+        <Link className="navbar-brand" to="/">
+          Epistaurant
+        </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#features">Menu</Nav.Link>
-            <Nav.Link href="#pricing">Prenota</Nav.Link>
-            <Nav.Link href="#pricing">Amministrazione</Nav.Link>
+            <Link
+              className={
+                location.pathname === "/menu" ? "nav-link active" : "nav-link"
+              }
+              to="/menu"
+            >
+              Menu
+            </Link>
+            <Link
+              className={
+                location.pathname === "/prenota"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+              to="/prenota"
+            >
+              Prenota
+            </Link>
+            <Link
+              className={
+                location.pathname === "/admin" ? "nav-link active" : "nav-link"
+              }
+              to="/admin"
+            >
+              Amministrazione
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
